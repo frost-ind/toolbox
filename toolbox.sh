@@ -5,12 +5,7 @@ true
 ################################################ Variable 1
 
 INTERACTIVE=True
-REPO='https://raw.githubusercontent.com/ezraholm50/techandtool/master'
-COLLABORAREPO='https://raw.githubusercontent.com/ezraholm50/collabora-auto/master'
-SPREEDREPO='https://raw.githubusercontent.com/ezraholm50/Spreed-auto/master'
-NCREPO='https://raw.githubusercontent.com/nextcloud/vm/master'
-WORDPRESSREPO='https://raw.githubusercontent.com/enoch85/wordpress-vm/master/'
-NEXTBERRYREPO='https://raw.githubusercontent.com/ezraholm50/NextBerry/master'
+REPO='https://raw.githubusercontent.com/frost-ind/toolbox/main/'
 
 ################################ Network vars 1.1
 
