@@ -7,7 +7,7 @@ true
 INTERACTIVE=True
 REPO='https://raw.githubusercontent.com/frost-ind/toolbox/main/'
 
-################################ Network vars 1.1
+################################################ Network vars 1.1
 
 IFCONFIG=$(ifconfig)
 clear
@@ -177,7 +177,7 @@ version(){
 }
 
 if ! version 16.04 "$DISTRO" 16.04.10; then
-    whiptail --msgbox "Ubuntu version $DISTRO is tested on 16.04 - 16.04.10 no support is given for other releases." "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "Ubuntu version $DISTRO is tested on 20.04 - Tool Version $VERSION." "$WT_HEIGHT" "$WT_WIDTH"
     #exit
 fi
 
@@ -224,7 +224,7 @@ echo "Hello"
 ################################################ Tools 3
 
 do_tools() {
-FUN=$(whiptail --backtitle "Tools" --title "Tech and Tool - Tools - https://www.techandme.se" --menu "Tech and tool" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
+FUN=$(whiptail --backtitle "Tools" --title "Frost Toolkit Tech Tools" --menu "Tool Selection Menu" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
 "1 Show LAN IP, Gateway, Netmask" "Ifconfig" \
 "2 Show WAN IP" "External IP address" \
 "3 Change Hostname" "Your machine's name" \
