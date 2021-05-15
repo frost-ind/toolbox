@@ -1705,7 +1705,7 @@ This tool is created by Frost Industries for less skilled linux terminal users.
 
 It makes it easy just browsing the menu and installing or using system tools.
 
-Please post requests (with REQUEST in title) here: https://github.com/frostind/tols
+Please post requests (with REQUEST in title) here: https://github.com/frost-ind/toolbox
 
 Note that this tool is tested on Ubuntu 20.04 (New commands will not work on debian)
 
@@ -1753,16 +1753,16 @@ fi
 calc_wt_size
 while true; do
   FUN=$(whiptail --backtitle "Frost Toolbox v1.0.0" --title "$HOSTNAME - Frost Industries" --menu "Main Menu" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Finish --ok-button Select \
-    "1 System Prep" "Setting up a new" \
-    "2 Tools and Utilities" "Various tools" \
-    "3 Packages" "Install various software packages" \
-    "4 Firewall" "Enable/disable and open/close ports" \
-    "5 Raspberry" "Specific tools for RPI 1, 2, 3 and zero" \
-    "6 Update & upgrade" "Updates and upgrades packages and get the latest version of this tool" \
-    "7 Reboot" "Reboots your machine" \
-    "8 Shutdown" "Shutdown your machine" \
-    "9 About Tech and Tool" "Information about this tool" \
-    "10 System Information" "Show available updates, releases and sys info" \
+    "1 Setup a new server" "| Prepair a new productions or test server" \
+    "2 Tools and Utilities" "| Various tools" \
+    "3 Packages" "| Install various software packages" \
+    "4 Firewall" "| Enable/disable and open/close ports" \
+    "5 Join To A Domain" "| Join this server to a domain" \
+    "6 Update & Upgrade" "| Updates and upgrades packages and get the latest version of this tool" \
+    "7 Reboot" "| Reboots your machine" \
+    "8 Shutdown" "| Shutdown your machine" \
+    "9 About Frost Toolbox" "| Information about this tool" \
+    "10 System Information" "| Show available updates, releases and sys info" \
     3>&1 1>&2 2>&3)
   RET=$?
   if [ $RET -eq 1 ]; then
@@ -1773,7 +1773,7 @@ while true; do
       2\ *) do_tools ;;
       3\ *) do_install ;;
       4\ *) do_firewall ;;
-      5\ *) do_Raspberry ;;
+      5\ *) do_domain_tool ;;
       6\ *) do_update ;;
       7\ *) do_reboot ;;
       8\ *) do_poweroff ;;
