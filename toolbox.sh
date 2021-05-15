@@ -857,7 +857,7 @@ do_install() {
   done < <(apt-get update)
 } | whiptail --title "Progress" --gauge "Please wait while updating" 6 60 0
 
-  FUN=$(whiptail --backtitle "Install software packages" --title "Tech and Tool - https://www.techandme.se" --menu "Tech and tool" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
+  FUN=$(whiptail --backtitle "Install software packages" --title "Software Install - Frost Industries" --menu "Tech and tool" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
       "I1 Install Package" "User defined" \
       "I2 Install Webmin" "Graphical interface to manage headless systems" \
       "I3 Install SSH Server" "Needed by a remote machine to be accessable via SSH" \
@@ -867,7 +867,7 @@ do_install() {
       "I7 Install Fail2Ban" "Install a failed login monitor, needs jails for apps!!!!" \
       "I8 Install Nginx" "Install Nginx webserver" \
       "I9 Install Zram-config" "For devices with low RAM, compresses your RAM content (RPI)" \
-      "I10 Install NFS Client" "Install NFS client to be able to mount NFS shares" \
+      "I10 Install Zabbix Agent" "Install Zabbix Agent to be able to monitor this server" \
       "I11 Install NFS Server" "Install NFS server to be able to broadcast NFS shares" \
       "I12 Install DDClient" "Update Dynamic Dns with WAN IP, dyndns.com, easydns.com etc." \
       "I13 Install AtoMiC-ToolKit" "Installer for Sabnzbd, Sonar, Couchpotato etc." \
@@ -894,7 +894,7 @@ do_install() {
       I7\ *) do_fail2ban ;;
       I8\ *) do_nginx ;;
       I9\ *) do_install_zram ;;
-      I10\ *) do_install_nfs_client ;;
+      I10\ *) do_install_zabbix_agent ;;
       I11\ *) do_install_nfs_server ;;
       I12\ *) do_install_ddclient ;;
       I13\ *) do_atomic ;;
@@ -1058,15 +1058,18 @@ else
 fi
 }
 
-################################ Install NFS client 4.10
+################################ Install Zabbix 5.0.1 LTS
 
-do_install_nfs_client() {
-  if [ $(dpkg-query -W -f='${Status}' nfs-common 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-        echo "NFS client is already installed!"
+do_install_zabbix_agent() {
+  if [ $(dpkg-query -W -f='${Status}' zabbix-agent 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+        echo "Zabbix Agent is already installed!"
 else
-  apt-get install nfs-common -y
-
-  whiptail --msgbox 'Installed! Auto mount like this: echo "<nfs-server-IP>:/   /mount_point   nfs    auto  0  0" >> /etc/fstab' "$WT_HEIGHT" "$WT_WIDTH"
+wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+focal_all.deb
+dpkg -i zabbix-release_5.0-1+focal_all.deb
+apt-get update
+apt-get install zabbix-agent -y -q 
+rm zabbix-release_5.0-1+focal_all.deb -r
+whiptail --msgbox "Zabbix Agent Install! Remember to setup the configuration file and restart the application." "$WT_HEIGHT" "$WT_WIDTH"
 fi
 }
 
@@ -1735,7 +1738,7 @@ fi
 
 calc_wt_size
 while true; do
-  FUN=$(whiptail --backtitle "Frost-Toolbox main menu" --title "Tech and Tool - http://my.frostind.com" --menu "Tools Menu" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Finish --ok-button Select \
+  FUN=$(whiptail --backtitle "Frost Toolbox v1.0.0" --title "$HOSTNAME - Frost Industries" --menu "Main Menu" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Finish --ok-button Select \
     "1 Install Frost-Toolbox" "Install Toolbox and Remove .sh file" \
     "2 Tools and Utilities" "Various tools" \
     "3 Packages" "Install various software packages" \
