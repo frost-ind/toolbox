@@ -223,7 +223,7 @@ do_prep() {
   elif [ $RET -eq 0 ]; then
     case "$FUN" in
       0\ *) do_dns ;;
-      1\ *) do_tbinstall ;;
+      1\ *) do_ltsupgrade ;;
       *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
     esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
  else
@@ -1057,10 +1057,6 @@ else
   whiptail --msgbox "Nginx is now installed, also port 443 and 80 are open in the firewall..." "$WT_HEIGHT" "$WT_WIDTH"
 fi
 }
-
-################################ Install  4.9
-
-
 
 ################################ Install NFS client 4.10
 
