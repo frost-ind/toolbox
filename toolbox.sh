@@ -117,10 +117,6 @@ else
     apt-get install curl -y
 fi
 
-#  if [ -f /tmp/version ]; then
-#          rm /tmp/version
-#  fi
-
 if [ "$CURRENTVERSION" == "$GITHUBVERSION" ]; then
           echo "Tool is up to date..."
 else
