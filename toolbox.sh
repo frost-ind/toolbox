@@ -217,7 +217,7 @@ do_prep() {
   "0 Join FI-DNS" "| Join Frost DNS Server"\
   "1 Check Updates" "| Check for new updates and apply" \
   "2 Enable Firewall" "| Enable Firewall and allow ssh" \
-  "3 Install Netdata" "Netdata is a local monitoring tool that can be accessed via webGUI" \
+  "3 Install Netdata" "| Netdata is a local monitoring tool that can be accessed via webGUI" \
     3>&1 1>&2 2>&3)
   RET=$?
   if [ $RET -eq 1 ]; then
@@ -320,6 +320,15 @@ Netmask: $NETMASK
 Gateway: $GATEWAY\
 " "$WT_HEIGHT" "$WT_WIDTH"
 }
+
+################################ Netdata
+
+do_netdata() {
+bash <(curl -Ss https://my-netdata.io/kickstart.sh)
+ufw allow 19999/tcp
+ufw reload
+  }
+
 
 ################################ Wan IP 3.2
 
@@ -1474,8 +1483,8 @@ ufw status
 sleep 2
 }
 ######Firewall#######
-do_allow_5050() {
-ufw allow 5050
+do_allow_netdata() {
+ufw allow 19999
 ufw status
 sleep 2
 }
