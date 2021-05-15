@@ -6,6 +6,7 @@ true
 
 INTERACTIVE=True
 REPO='https://raw.githubusercontent.com/frost-ind/toolbox/main/'
+VER='https://raw.githubusercontent.com/frost-ind/toolbox/main/version'
 
 
 ################################ Network vars 1.1
@@ -107,7 +108,7 @@ fi
 ################################ Update notification
 
 CURRENTVERSION=$(grep -m1 "# VERSION=" /usr/sbin/toolbox)
-GITHUBVERSION=$(curl -s $REPO/version)
+GITHUBVERSION=$(curl -s https://raw.githubusercontent.com/frost-ind/toolbox/main/version)
 SCRIPTS="/var/scripts"
 
 if [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
