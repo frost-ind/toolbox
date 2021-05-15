@@ -1739,7 +1739,7 @@ fi
 calc_wt_size
 while true; do
   FUN=$(whiptail --backtitle "Frost Toolbox v1.0.0" --title "$HOSTNAME - Frost Industries" --menu "Main Menu" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Finish --ok-button Select \
-    "1 Install Frost-Toolbox" "Install Toolbox and Remove .sh file" \
+    "1 System Prep" "Setting up a new server" \
     "2 Tools and Utilities" "Various tools" \
     "3 Packages" "Install various software packages" \
     "4 Firewall" "Enable/disable and open/close ports" \
