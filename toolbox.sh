@@ -8,7 +8,6 @@ INTERACTIVE=True
 REPO='https://raw.githubusercontent.com/frost-ind/toolbox/main/'
 VER='https://raw.githubusercontent.com/frost-ind/toolbox/main/version'
 
-
 ################################ Network vars 1.1
 
 IFCONFIG=$(ifconfig)
@@ -669,7 +668,7 @@ if grep -q "ALERT - Root Shell Access" "/root/.bashrc"; then
 else
 echo "echo 'ALERT - Root Shell Access ("$CURRENT_HOSTNAME") on:' `date` `who` | mail -s "Alert: Root Access from `who | cut -d'(' -f2 | cut -d')' -f1`" "$MAILADDRESS"" >> /root/.bashrc
   if [ $? -eq 1 ]; then
-    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
   else
     whiptail --msgbox "Installed email notification upon login of the ROOT user. Please logout and test it." "$WT_HEIGHT" "$WT_WIDTH"
   fi
@@ -694,7 +693,7 @@ if grep -q "ALERT - Root Shell Access" "/home/$USER/.bashrc"; then
 else
 echo "echo 'ALERT - $USER Shell Access ("$CURRENT_HOSTNAME") on:' `date` `who` | mail -s "Alert: $USER Access from `who | cut -d'(' -f2 | cut -d')' -f1`" "$MAILADDRESS"" >> /home/$USER/.bashrc
   if [ $? -eq 1 ]; then
-    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
   else
     whiptail --msgbox "Installed email notification upon login of the specified user. Please logout and test it." "$WT_HEIGHT" "$WT_WIDTH"
   fi
@@ -731,7 +730,7 @@ then
     nslookup frostind.com
     if [[ $? > 0 ]]
     then
-    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
     else
     whiptail --msgbox "Settings reverted succesfully..." "$WT_HEIGHT" "$WT_WIDTH"
     fi
@@ -748,7 +747,7 @@ if grep -q "Dpkg::Progress-Fancy "1";" "/etc/apt/apt.conf.d/99progressbar"; then
 else
   echo "Dpkg::Progress-Fancy "1";" > /etc/apt/apt.conf.d/99progressbar
   if [ $? -eq 1 ]; then
-    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
   else
 	  whiptail --msgbox "You now have a fancy progress bar, outside this installer run apt or apt-get install <package>" "$WT_HEIGHT" "$WT_WIDTH"
   fi
@@ -762,7 +761,7 @@ if grep -q "GRUB_CMDLINE_LINUX_DEFAULT="splash quiet"" "/etc/default/grub"; then
   sed -i 's|GRUB_CMDLINE_LINUX_DEFAULT="splash quiet"|GRUB_CMDLINE_LINUX_DEFAULT="text"|g' /etc/default/grub
   update-grub
   if [ $? -eq 1 ]; then
-    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
   else
     whiptail --msgbox "System now boots to terminal..." "$WT_HEIGHT" "$WT_WIDTH"
   fi
@@ -772,7 +771,7 @@ if grep -q "GRUB_CMDLINE_LINUX_DEFAULT=""" "/etc/default/grub"; then
   sed -i 's|GRUB_CMDLINE_LINUX_DEFAULT=""|GRUB_CMDLINE_LINUX_DEFAULT="text"|g' /etc/default/grub
   update-grub
   if [ $? -eq 1 ]; then
-    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
   else
     whiptail --msgbox "System now boots to terminal..." "$WT_HEIGHT" "$WT_WIDTH"
   fi
@@ -786,7 +785,7 @@ if grep -q GRUB_CMDLINE_LINUX_DEFAULT="splash quiet" "/etc/default/grub"; then
   sed -i 's|GRUB_CMDLINE_LINUX_DEFAULT="splash quiet"|GRUB_CMDLINE_LINUX_DEFAULT=""|g' /etc/default/grub
   update-grub
   if [ $? -eq 1 ]; then
-    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
   else
     whiptail --msgbox "System now boots to desktop..." "$WT_HEIGHT" "$WT_WIDTH"
   fi
@@ -796,7 +795,7 @@ fi
     sed -i 's|GRUB_CMDLINE_LINUX_DEFAULT="text"|GRUB_CMDLINE_LINUX_DEFAULT=""|g' /etc/default/grub
   	update-grub
     if [ $? -eq 1 ]; then
-      whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+      whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
     else
       whiptail --msgbox "System now boots to desktop..." "$WT_HEIGHT" "$WT_WIDTH"
     fi
@@ -851,7 +850,7 @@ BACKUPFILE="$HOSTNAME-$DATE.tar.bz2"
 
 tar -cvpjf /$BACKUPFILE --xattrs --absolute-names --exclude=/proc --exclude=/dev --exclude=/media --exclude=/lost+found --exclude=/$BACKUPFILE --exclude=/mnt --exclude=/sys / #&& whiptail --msgbox "Backup finished, backup.tar.bz2 is located in /" "$WT_HEIGHT" "$WT_WIDTH"
 if [ $? -eq 1 ]; then
-  whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/techandtool" "$WT_HEIGHT" "$WT_WIDTH"
+  whiptail --msgbox "There where errors running this command. Please run this tool in debug mode: sudo bash -x /usr/sbin/toolbox" "$WT_HEIGHT" "$WT_WIDTH"
 else
   whiptail --msgbox "Backup finished, $BACKUPFILE is located in /" "$WT_HEIGHT" "$WT_WIDTH"
   echo "$BACKUPFILE" > /var/scripts/donotremove-backupfile
@@ -1798,23 +1797,23 @@ do_update() {
 
 	dpkg --configure --pending
 
-  if [ -f "$SCRIPTS"/techandtool.sh ]; then
-          rm "$SCRIPTS"/techandtool.sh
+  if [ -f "$SCRIPTS"/toolbox.sh ]; then
+          rm "$SCRIPTS"/toolbox.sh
   fi
 
-  if [ -f /usr/sbin/techandtool ]; then
-          rm /usr/sbin/techandtool
+  if [ -f /usr/sbin/toolbox ]; then
+          rm /usr/sbin/toolbox
   fi
           mkdir -p "$SCRIPTS"
-          wget -q https://github.com/ezraholm50/techandtool/raw/master/techandtool.sh -P "$SCRIPTS"
-          cp "$SCRIPTS"/techandtool.sh /usr/sbin/techandtool
-          chmod +x /usr/sbin/techandtool
+          wget -q https://raw.githubusercontent.com/frost-ind/toolbox/main/toolbox.sh -P "$SCRIPTS"
+          cp "$SCRIPTS"/toolbox.sh /usr/sbin/toolbox
+          chmod +x /usr/sbin/toolbox
 
-          if [ -f "$SCRIPTS"/techandtool.sh ]; then
-                  rm "$SCRIPTS"/techandtool.sh
+          if [ -f "$SCRIPTS"/toolbox.sh ]; then
+                  rm "$SCRIPTS"/toolbox.sh
           fi
 
-          exec techandtool
+          exec toolbox
 }
 
 ################################################ Reboot 7
