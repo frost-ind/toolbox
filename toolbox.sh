@@ -7,7 +7,8 @@ true
 INTERACTIVE=True
 REPO='https://raw.githubusercontent.com/frost-ind/toolbox/main/'
 
-################################################ Network vars 1.1
+
+################################ Network vars 1.1
 
 IFCONFIG=$(ifconfig)
 clear
@@ -105,7 +106,7 @@ fi
 
 ################################ Update notification
 
-CURRENTVERSION=$(grep -m1 "# VERSION=" /usr/sbin/techandtool)
+CURRENTVERSION=$(grep -m1 "# VERSION=" /usr/sbin/toolbox)
 GITHUBVERSION=$(curl -s $REPO/version)
 SCRIPTS="/var/scripts"
 
@@ -127,23 +128,23 @@ else
   whiptail --yesno "A new version of this tool is available, download it now?" --title "Update Notification!" 10 60 2
   if [ $? -eq 0 ]; then # yes
 
-  if [ -f "$SCRIPTS"/techandtool.sh ]; then
-          rm "$SCRIPTS"/techandtool.sh
+  if [ -f "$SCRIPTS"/toolbox.sh ]; then
+          rm "$SCRIPTS"/toolbox.sh
   fi
 
-  if [ -f /usr/sbin/techandtool ]; then
-          rm /usr/sbin/techandtool
+  if [ -f /usr/sbin/toolbox ]; then
+          rm /usr/sbin/toolbox
   fi
           mkdir -p "$SCRIPTS"
-          wget -q $REPO/techandtool.sh -P "$SCRIPTS"
-          cp "$SCRIPTS"/techandtool.sh /usr/sbin/techandtool
-          chmod +x /usr/sbin/techandtool
+          wget -q $REPO/toolbox.sh -P "$SCRIPTS"
+          cp "$SCRIPTS"/toolbox.sh /usr/sbin/toolbox
+          chmod +x /usr/sbin/toolbox
 
-          if [ -f "$SCRIPTS"/techandtool.sh ]; then
-                  rm "$SCRIPTS"/techandtool.sh
+          if [ -f "$SCRIPTS"/toolbox.sh ]; then
+                  rm "$SCRIPTS"/toolbox.sh
           fi
 
-          exec techandtool
+          exec toolbox
     fi
 fi
 
@@ -177,7 +178,7 @@ version(){
 }
 
 if ! version 16.04 "$DISTRO" 16.04.10; then
-    whiptail --msgbox "Ubuntu version $DISTRO is tested on 20.04 - Tool Version $VERSION." "$WT_HEIGHT" "$WT_WIDTH"
+    whiptail --msgbox "Ubuntu version $DISTRO is tested on 16.04 - 16.04.10 no support is given for other releases." "$WT_HEIGHT" "$WT_WIDTH"
     #exit
 fi
 
@@ -224,7 +225,7 @@ echo "Hello"
 ################################################ Tools 3
 
 do_tools() {
-FUN=$(whiptail --backtitle "Tools" --title "Frost Toolkit Tech Tools" --menu "Tool Selection Menu" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
+FUN=$(whiptail --backtitle "Tools" --title "Tech and Tool - Tools - https://www.techandme.se" --menu "Tech and tool" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
 "1 Show LAN IP, Gateway, Netmask" "Ifconfig" \
 "2 Show WAN IP" "External IP address" \
 "3 Change Hostname" "Your machine's name" \
