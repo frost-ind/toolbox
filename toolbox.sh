@@ -72,8 +72,7 @@ else
   clear
 fi
 
-
-################################ Fix nasty locale error over SSH
+################################################ | - SSH Fix - |
 
 if [ $(dpkg-query -W -f='${Status}' openssh-server 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
   if grep -q "#SendEnv LANG LC_*" "/etc/ssh/ssh_config"; then
@@ -93,7 +92,7 @@ if [ $(dpkg-query -W -f='${Status}' openssh-server 2>/dev/null | grep -c "ok ins
   fi
 fi
 
-################################ Whiptail size
+################################################ | - Whiptail Vars - |
 
 calc_wt_size() {
   WT_HEIGHT=17
@@ -108,7 +107,7 @@ calc_wt_size() {
   WT_MENU_HEIGHT=$((WT_HEIGHT-7))
 }
 
-################################################ Whiptail check
+################################################ | - Whiptail Install Check - |
 
 	if [ $(dpkg-query -W -f='${Status}' whiptail 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
         echo "Whiptail is already installed..."
@@ -125,14 +124,14 @@ else
 
 fi
 
-################################################ Check if root
+################################################ | - I Am Root Check - |
 
 if [ "$(whoami)" != "root" ]; then
         whiptail --msgbox "Sorry you are not root. You must type: sudo toolbox" "$WT_HEIGHT" "$WT_WIDTH"
         exit
 fi
 
-################################ Update notification
+################################################ | - Frost Toolbox Updates - |
 
 CURRENTVERSION=$(grep -m1 "# VERSION=" /usr/sbin/toolbox)
 GITHUBVERSION=$(curl -s https://raw.githubusercontent.com/frost-ind/toolbox/main/version)
@@ -149,7 +148,7 @@ if [ "$CURRENTVERSION" == "$GITHUBVERSION" ]; then
           echo "Tool is up to date..."
 else
 
-  whiptail --yesno "A new version of this tool is available, download it now?" --title "Update Notification!" 10 60 2
+  whiptail --yesno "A new version of toolbox is available, download it now?" --title "Update Notification!" 10 60 2
   if [ $? -eq 0 ]; then # yes
 
   if [ -f "$SCRIPTS"/toolbox.sh ]; then
@@ -172,7 +171,7 @@ else
     fi
 fi
 
-################################################ Do finish
+################################################ | - Ask To Reboot - |
 
 ASK_TO_REBOOT=0
 do_finish() {
@@ -186,7 +185,7 @@ do_finish() {
   exit 0
 }
 
-################################################ Check Ubuntu OS
+################################################ | - OS Check - |
 
 DISTRO=$(lsb_release -sd | cut -d ' ' -f 2)
 version(){
@@ -201,8 +200,8 @@ version(){
     [[ $2 != "$h" && $2 != "$t" ]]
 }
 
-if ! version 16.04 "$DISTRO" 16.04.10; then
-    whiptail --msgbox "Ubuntu version $DISTRO is tested on 16.04 - 16.04.10 no support is given for other releases." "$WT_HEIGHT" "$WT_WIDTH"
+if ! version 20.04 "$DISTRO" 12.04.2; then
+    whiptail --msgbox "Ubuntu version $DISTRO is tested on 20.04 - 20.04.2 no support is given for other releases." "$WT_HEIGHT" "$WT_WIDTH"
     #exit
 fi
 
@@ -211,39 +210,25 @@ then
   	whiptail --msgbox "'ubuntu-server' is not installed, this doesn't seem to be a server. Please install the server version of Ubuntu and restart the script" "$WT_HEIGHT" "$WT_WIDTH"
     exit 1
 fi
+################################################ | - System Prep - |
 
-################################################ Frost Toolbox
-
-
-do_frosttb() {
+do_prep() {
   FUN=$(whiptail --backtitle "Frost Toolbox" --title "Install Frost Toolbox" --menu "Please make a selection below" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
-  "0 Remove Frost Toolbox" "| Uninstall Frost Toolbox"\
-  "1 Install Frost Toolbox"  "| Install Frost Toolbox" \
+  "0 Join FI-DNS" ""\
+  "1 Check Updates and Apply" "" \
     3>&1 1>&2 2>&3)
   RET=$?
   if [ $RET -eq 1 ]; then
     return 0
   elif [ $RET -eq 0 ]; then
     case "$FUN" in
-      0\ *) do_tbuinstall ;;
+      0\ *) do_dns ;;
       1\ *) do_tbinstall ;;
       *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
     esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
  else
    exit 1
   fi
-}
-
-################################################ Uninstall Frost Toolbox
-
-do_tbuinstall() {
-echo "Hello" 
-}
-
-################################################ Install Frost Toolbox
-
-do_tbinstall() {
-echo "Hello"
 }
 
 ################################################ Tools 3
@@ -400,169 +385,6 @@ do_change_locale() {
 
 do_change_timezone() {
   dpkg-reconfigure tzdata
-}
-
-################################ Wifi 3.5
-
-do_wlan() {
-whiptail --yesno "Do you want to connect to wifi? Its recommended to use a wired connection for your Nextcloud server!" --yes-button "Wireless" --no-button "Wired" "$WT_HEIGHT" "$WT_WIDTH"
-if [ $? -eq 0 ]; then # yes
-      apt-get install linux-firmware wicd-curses wicd-daemon wicd-cli -y
-      wicd-curses
-			#whiptail --msgbox "In the next screen navigate with the arrow keys (right arrow for config) and don't for get to select auto connect at the networks config settings." "$WT_HEIGHT" "$WT_WIDTH"
-      #whiptail --msgbox "Due to the new interface the DHCP server gave you a new ip:\n\n'$ADDRESS' \n\n If the NIC starts with 'wl', you're good to go and you can unplug the ethernet cable: \n\n '$IFACE'" "$WT_HEIGHT" "$WT_WIDTH"
-
-else
-        		echo "We'll use a wired connection..."
-fi
-}
-
-################################ Raspberry specific 3.6
-
-do_Raspberry() {
-  FUN=$(whiptail --backtitle "Raspberry" --title "Tech and Tool - https://www.techandme.se" --menu "Raspberry" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
-  "1 Resize SD" "" \
-  "2 External USB" "Use an USB HD/SSD as root" \
-  "3 RPI-update" "Update the RPI firmware and kernel" \
-  "4 Raspi-config" "Set various settings, not all are tested! Already safely overclocked!" \
-    3>&1 1>&2 2>&3)
-  RET=$?
-  if [ $RET -eq 1 ]; then
-    return 0
-  elif [ $RET -eq 0 ]; then
-    case "$FUN" in
-      1\ *) do_expand_rootfs "$@";;
-      2\ *) do_external_usb ;;
-      3\ *) do_rpi_update ;;
-      4\ *) do_raspi_config ;;
-      *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
-    esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
-  fi
-}
-
-##################### Resize SD 3.61
-
-do_expand_rootfs() {
-  if ! [ -h /dev/root ]; then
-    whiptail --msgbox "/dev/root does not exist or is not a symlink. Don't know how to expand" 20 60 2
-    return 0
-  fi
-
-  ROOT_PART=$(readlink /dev/root)
-  PART_NUM=${ROOT_PART#mmcblk0p}
-  if [ "$PART_NUM" = "$ROOT_PART" ]; then
-    whiptail --msgbox "/dev/root is not an SD card. Don't know how to expand" 20 60 2
-    return 0
-  fi
-
-  # NOTE: the NOOBS partition layout confuses parted. For now, let's only
-  # agree to work with a sufficiently simple partition layout
-  if [ "$PART_NUM" -ne 2 ]; then
-    whiptail --msgbox "Your partition layout is not currently supported by this tool. You are probably using NOOBS, in which case your root filesystem is already expanded anyway." 20 60 2
-    return 0
-  fi
-
-  LAST_PART_NUM=$(parted /dev/mmcblk0 -ms unit s p | tail -n 1 | cut -f 1 -d:)
-
-  if [ "$LAST_PART_NUM" != "$PART_NUM" ]; then
-    whiptail --msgbox "/dev/root is not the last partition. Don't know how to expand" 20 60 2
-    return 0
-  fi
-
-  # Get the starting offset of the root partition
-  PART_START=$(parted /dev/mmcblk0 -ms unit s p | grep "^${PART_NUM}" | cut -f 2 -d:)
-  [ "$PART_START" ] || return 1
-  # Return value will likely be error for fdisk as it fails to reload the
-  # partition table because the root fs is mounted
-  fdisk /dev/mmcblk0 <<EOF
-p
-d
-$PART_NUM
-n
-p
-$PART_NUM
-$PART_START
-p
-w
-EOF
-
-  # now set up an init.d script
-cat <<\EOF > /etc/init.d/resize2fs_once &&
-#!/bin/sh
-### BEGIN INIT INFO
-# Provides:          resize2fs_once
-# Required-Start:
-# Required-Stop:
-# Default-Start: 2 3 4 5 S
-# Default-Stop:
-# Short-Description: Resize the root filesystem to fill partition
-# Description:
-### END INIT INFO
-. /lib/lsb/init-functions
-case "$1" in
-  start)
-    log_daemon_msg "Starting resize2fs_once" &&
-    resize2fs /dev/root &&
-    rm /etc/init.d/resize2fs_once &&
-    update-rc.d resize2fs_once remove &&
-    log_end_msg $?
-    ;;
-  *)
-    echo "Usage: $0 start" >&2
-    exit 3
-    ;;
-esac
-EOF
-  chmod +x /etc/init.d/resize2fs_once &&
-  update-rc.d resize2fs_once defaults &&
-
-  whiptail --msgbox "Root partition has been resized.\nThe filesystem will be enlarged upon the next reboot" "$WT_HEIGHT" "$WT_WIDTH"
-  ASK_TO_REBOOT=1
-	do_finish
-}
-
-##################### External USB 3.62
-
-do_external_usb() {
-	whiptail --msgbox "Under construction..." "$WT_HEIGHT" "$WT_WIDTH"
-}
-
-##################### RPI-update 3.63
-
-do_rpi_update() {
-  if [ $(dpkg-query -W -f='${Status}' rpi-update 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-    {
-    i=1
-    while read -r line; do
-        i=$(( i + 1 ))
-        echo $i
-    done < <(rpi-update)
-  } | whiptail --title "Progress" --gauge "Please wait while updating your RPI firmware and kernel" 6 60 0
-else
-    apt-get install rpi-update -y
-
-	  {
-    i=1
-    while read -r line; do
-        i=$(( i + 1 ))
-        echo $i
-    done < <(rpi-update)
-  } | whiptail --title "Progress" --gauge "Please wait while updating your RPI firmware and kernel" 6 60 0
-fi
-}
-
-##################### Raspi-config 3.64
-
-do_raspi_config() {
-  if [ $(dpkg-query -W -f='${Status}' raspi-config 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-  raspi-config
-else
-  wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160527_all.deb -P /tmp
-  apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
-  dpkg -i /tmp/raspi-config_20160527_all.deb
-  whiptail --msgbox "Raspi-config is now installed, run it by typing: sudo raspi-config" "$WT_HEIGHT" "$WT_WIDTH"
-  raspi-config
-fi
 }
 
 ################################ Show folder size 3.7
