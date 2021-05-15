@@ -1140,7 +1140,7 @@ TOMAIL=$(whiptail --inputbox "What email should receive mail when system is infe
     apt-get remove clamav clamav-freshclam -y
   fi
 
-  apt-get install clamav clamav-freshclam heirloom-mailx -y
+  apt-get install clamav clamav-freshclam -y
   service ClamAV-freshclam start
   mkdir -p /var/scripts
 
