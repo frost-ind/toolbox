@@ -1755,7 +1755,7 @@ while true; do
 	do_finish
   elif [ $RET -eq 0 ]; then
     case "$FUN" in
-      1\ *) do_frosttb ;;
+      1\ *) do_prep ;;
       2\ *) do_tools ;;
       3\ *) do_install ;;
       4\ *) do_firewall ;;
