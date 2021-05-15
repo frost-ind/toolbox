@@ -1,14 +1,42 @@
 #!/bin/bash
 # shellcheck disable=2034,2059
 true
+#----------------------
 # VERSION=1.0.0
-################################################ Variable 1
-
+#----------------------
+#
+#                    ..',;::::::;,'..
+#                ..';:cllllllllllllc:;,..
+#             ..;cllllllllllllllllllllllc;'.
+#           .,cllllllllllllllllllllllllllllc,.
+#         .'cllllllllllllllllllllllllllllolllc,.
+#        .:llllllllllllllllllllllllllllllllllll:.
+#       .cllllllllllllllllllll:;::,',;:cllllllllc'
+#      .clllllllllllllllllc;... .,,.   ..',cllollc'            _____              _     ___           _           _        _
+#     .:lllllllllllllllc;'........';.      .;lllll:.          |  ___| __ ___  ___| |_  |_ _|_ __   __| |_   _ ___| |_ _ __(_) ___  ___
+#     'llllllllllllll:'.. ..   .....;'       ,cllll,          | |_ | '__/ _ \/ __| __|  | || '_ \ / _` | | | / __| __| '__| |/ _ \/ __|
+#     ;lllllllllll:,.               .;;.      .:lll:.         |  _|| | | (_) \__ \ |_   | || | | | (_| | |_| \__ \ |_| |  | |  __/\__ \
+#     :llllllllc,.                    ,;.      .;ll:.         |_|  |_|  \___/|___/\__| |___|_| |_|\__,_|\__,_|___/\__|_|  |_|\___||___/  [X]
+#     ;lllllc;..          .....        .;,       'c:.         ___________________________________________________________________________________
+#     ,lll:'.            ........       .;;.      .'
+#     .;'.                ........       .,:.
+#                 .        ........        ':,.                 
+#              ......       ........        .:;.                          
+#           ..........        ........       .;:.                         
+#          ............         .......        .
+#           .............      .........
+#             ...........................
+#                ........................
+#                     ..............
+#
+#                                               
+################################################ | - Frostind Repository - |
+                                               
 INTERACTIVE=True
 REPO='https://raw.githubusercontent.com/frost-ind/toolbox/main/'
 VER='https://raw.githubusercontent.com/frost-ind/toolbox/main/version'
 
-################################ Network vars 1.1
+################################################ | - Internet Check - |
 
 IFCONFIG=$(ifconfig)
 clear
