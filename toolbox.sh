@@ -1069,7 +1069,21 @@ dpkg -i zabbix-release_5.0-1+focal_all.deb
 apt-get update
 apt-get install zabbix-agent -y -q 
 rm zabbix-release_5.0-1+focal_all.deb -r
-whiptail --msgbox "Zabbix Agent Install! Remember to setup the configuration file and restart the application." "$WT_HEIGHT" "$WT_WIDTH"
+sleep 2
+clear
+echo
+echo "Setting Up Zabbix Agent ..."
+sleep 3
+echo
+sed -i 's|Server=127.0.0.1|Server=zabbix.frostind.com|g' /etc/zabbix/zabbix_agentd.conf
+sed -i 's|Hostname=Zabbix server|Hostname=$HOSTNAME|g' /etc/zabbix/zabbix_agentd.conf
+echo
+sleep 2
+echo "Connecting To Frost Industries Zabbis Server"
+sleep 1
+nslookup zabbix.frostind.com
+sleep 3
+whiptail --msgbox "Zabbix Agent Installed! Remember to setup the configuration file and restart the application." "$WT_HEIGHT" "$WT_WIDTH"
 fi
 }
 
@@ -1739,7 +1753,7 @@ fi
 calc_wt_size
 while true; do
   FUN=$(whiptail --backtitle "Frost Toolbox v1.0.0" --title "$HOSTNAME - Frost Industries" --menu "Main Menu" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Finish --ok-button Select \
-    "1 System Prep" "Setting up a new server" \
+    "1 System Prep" "Setting up a new" \
     "2 Tools and Utilities" "Various tools" \
     "3 Packages" "Install various software packages" \
     "4 Firewall" "Enable/disable and open/close ports" \
