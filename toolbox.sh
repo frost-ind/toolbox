@@ -214,8 +214,10 @@ fi
 
 do_prep() {
   FUN=$(whiptail --backtitle "Frost Toolbox" --title "Install Frost Toolbox" --menu "Please make a selection below" "$WT_HEIGHT" "$WT_WIDTH" "$WT_MENU_HEIGHT" --cancel-button Back --ok-button Select \
-  "0 Join FI-DNS" ""\
-  "1 Check Updates and Apply" "" \
+  "0 Join FI-DNS" "| Join Frost DNS Server"\
+  "1 Check Updates" "| Check for new updates and apply" \
+  "2 Enable Firewall" "| Enable Firewall and allow ssh" \
+  "3 Install Netdata" "Netdata is a local monitoring tool that can be accessed via webGUI" \
     3>&1 1>&2 2>&3)
   RET=$?
   if [ $RET -eq 1 ]; then
@@ -224,6 +226,8 @@ do_prep() {
     case "$FUN" in
       0\ *) do_dns ;;
       1\ *) do_ltsupgrade ;;
+      2\ *) do_ufw_enable ;;
+      3\ *) do_netdata ;;
       *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
     esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
  else
